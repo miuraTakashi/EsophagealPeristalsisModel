@@ -2,6 +2,25 @@
 
 Mathematical model of human esophageal motility
 
+## Reference
+
+This repository accompanies the following paper:
+
+> **A mathematical model of human oesophageal motility function**
+> Takashi Miura, Hiroshi Ishii, Yoshitaka Hata, Hisako Takigawa-Imamura,
+> Kei Sugihara, Shin-Ichiro Ei, Xiaopeng Bai, Eikichi Ihara and Yoshihiro Ogawa
+> *Royal Society Open Science*, 20 August 2025.
+> DOI: [10.1098/rsos.250491](https://doi.org/10.1098/rsos.250491)
+
+### Abstract (summary)
+
+The model recreates the muscle movements of the esophagus during swallowing and reproduces muscle dynamics observed in a wide range of esophageal motility disorders defined by the Chicago Classification.
+Key phenomena captured include:
+
+- **Lower esophageal sphincter (LES) on/off switching** — the LES opens only at the correct moment during swallowing.
+- **Deglutitive inhibition** — successive swallows suppress each other; only the last contraction propagates, which is reproduced by the Multiple Rapid Swallows (MRS) protocol.
+- **Esophageal motility disorders** — Type I/II/III Achalasia, EGJOO, Distal Esophageal Spasm, Absent Contractility, Jackhammer Esophagus, and IEM are all simulated by adjusting a small number of biophysical parameters.
+
 ## Overview
 
 This repository contains a Python implementation of a spatiotemporal mathematical model of esophageal peristalsis, ported from the original Mathematica notebook (`EsophagusModel.nb`).
