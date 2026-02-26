@@ -650,7 +650,8 @@ def plot_stimulus(
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    os.makedirs("Results", exist_ok=True)
+    OUT = "Results/Normal"
+    os.makedirs(OUT, exist_ok=True)
 
     # ── Initial conditions ────────────────────────────────────────────────────
     u0, v0, w0 = make_initial_conditions()
@@ -672,41 +673,41 @@ if __name__ == "__main__":
     print("Simulation complete.")
 
     # ── Save numerical results ────────────────────────────────────────────────
-    np.save("Results/states_u_normal.npy", states_u)
-    np.save("Results/states_v_normal.npy", states_v)
-    np.save("Results/states_w_normal.npy", states_w)
-    print("Saved states to Results/.")
+    np.save(f"{OUT}/states_u_normal.npy", states_u)
+    np.save(f"{OUT}/states_v_normal.npy", states_v)
+    np.save(f"{OUT}/states_w_normal.npy", states_w)
+    print(f"Saved states to {OUT}/.")
 
     # ── HRM plot ──────────────────────────────────────────────────────────────
     fig = hrm_plot(states_w, label="Control")
-    fig.savefig("Results/HRMPlot_control.pdf", bbox_inches="tight")
-    fig.savefig("Results/HRMPlot_control.png", dpi=150, bbox_inches="tight")
+    fig.savefig(f"{OUT}/HRMPlot_control.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/HRMPlot_control.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("Saved Results/HRMPlot_control.*")
+    print(f"Saved {OUT}/HRMPlot_control.*")
 
     # ── UVW spatiotemporal plot ───────────────────────────────────────────────
     fig = uvw_plot(states_u, states_v, states_w)
-    fig.savefig("Results/UVWPlot_control.pdf", bbox_inches="tight")
-    fig.savefig("Results/UVWPlot_control.png", dpi=150, bbox_inches="tight")
+    fig.savefig(f"{OUT}/UVWPlot_control.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/UVWPlot_control.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("Saved Results/UVWPlot_control.*")
+    print(f"Saved {OUT}/UVWPlot_control.*")
 
     # ── Parameter distribution plots ─────────────────────────────────────────
     fig = plot_parameter_distributions()
-    fig.savefig("Results/ParameterDistributions.pdf", bbox_inches="tight")
-    fig.savefig("Results/ParameterDistributions.png", dpi=150, bbox_inches="tight")
+    fig.savefig(f"{OUT}/ParameterDistributions.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/ParameterDistributions.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
 
     # ── Kernel plots ─────────────────────────────────────────────────────────
     fig = plot_kernels()
-    fig.savefig("Results/KernelPlots.pdf", bbox_inches="tight")
-    fig.savefig("Results/KernelPlots.png", dpi=150, bbox_inches="tight")
+    fig.savefig(f"{OUT}/KernelPlots.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/KernelPlots.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
 
     # ── Stimulus plots ────────────────────────────────────────────────────────
     fig = plot_stimulus(SCNS_NORMAL, SIMULATION_LENGTH)
-    fig.savefig("Results/StimulusPlot_normal.pdf", bbox_inches="tight")
-    fig.savefig("Results/StimulusPlot_normal.png", dpi=150, bbox_inches="tight")
+    fig.savefig(f"{OUT}/StimulusPlot_normal.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/StimulusPlot_normal.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
 
-    print("All figures saved to Results/.")
+    print(f"All figures saved to {OUT}/.")

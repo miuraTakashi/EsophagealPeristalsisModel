@@ -473,7 +473,8 @@ DISEASE_PRETTY_NAMES = {
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    os.makedirs("Results", exist_ok=True)
+    OUT = "Results/Diseases"
+    os.makedirs(OUT, exist_ok=True)
 
     for key, cond_fn, n_cols in DISEASE_REGISTRY:
         pretty = DISEASE_PRETTY_NAMES[key]
@@ -483,8 +484,8 @@ if __name__ == "__main__":
 
         conds = cond_fn()
         fig = make_panel_figure(conds, pretty, n_cols=n_cols)
-        out_pdf = f"Results/{key}.pdf"
-        out_png = f"Results/{key}.png"
+        out_pdf = f"{OUT}/{key}.pdf"
+        out_png = f"{OUT}/{key}.png"
         fig.savefig(out_pdf, bbox_inches="tight")
         fig.savefig(out_png, dpi=150, bbox_inches="tight")
         plt.close(fig)
