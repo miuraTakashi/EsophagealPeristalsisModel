@@ -311,6 +311,7 @@ SCNS_REPEATED_SWALLOW_LONG: np.ndarray = sum(
 )
 
 PEP_NULL: np.ndarray = np.zeros((SIMULATION_LN, N_LN))
+PEP_NULL_LONG: np.ndarray = np.zeros((SIMULATION_LN_LONG, N_LN))
 PEP_POSITIVE: np.ndarray = make_pep_positive(
     SIMULATION_LN, N_LN, BODY_LENGTH_LN, _S_CNS_DUR_LN
 )
@@ -710,4 +711,52 @@ if __name__ == "__main__":
     fig.savefig(f"{OUT}/StimulusPlot_normal.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
 
-    print(f"All figures saved to {OUT}/.")
+    # ── MRS (Multiple Rapid Swallows) simulation ──────────────────────────────
+    simulation_length_long = SIMULATION_LENGTH * SIMULATION_LENGTH_LONG_FACTOR
+
+    print("\nRunning MRS (Multiple Rapid Swallows) simulation...")
+    u0, v0, w0 = make_initial_conditions()
+    states_u_mrs, states_v_mrs, states_w_mrs = run_simulation(
+        u0, v0, w0,
+        scns=SCNS_REPEATED_SWALLOW_LONG,
+        pep=PEP_NULL_LONG,
+        kin=KIN_NORMAL,
+        kmn=KMN_NORMAL,
+        dens=dens, tens=tens, aens=aens,
+        esm=esm,  dsm=dsm,  bsm=bsm,
+        les_mask=LES_MASK,
+    )
+    print("MRS simulation complete.")
+
+    np.save(f"{OUT}/states_u_mrs.npy", states_u_mrs)
+    np.save(f"{OUT}/states_v_mrs.npy", states_v_mrs)
+    np.save(f"{OUT}/states_w_mrs.npy", states_w_mrs)
+
+    fig = hrm_plot(
+        states_w_mrs,
+        label="Multiple Rapid Swallows (MRS)",
+        simulation_length=simulation_length_long,
+    )
+    fig.savefig(f"{OUT}/HRMPlot_mrs.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/HRMPlot_mrs.png", dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    fig = uvw_plot(
+        states_u_mrs, states_v_mrs, states_w_mrs,
+        simulation_length=simulation_length_long,
+    )
+    fig.savefig(f"{OUT}/UVWPlot_mrs.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/UVWPlot_mrs.png", dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    fig = plot_stimulus(
+        SCNS_REPEATED_SWALLOW_LONG,
+        simulation_length=simulation_length_long,
+        title=r"$S_{CNS}$ — Multiple Rapid Swallows",
+    )
+    fig.savefig(f"{OUT}/StimulusPlot_mrs.pdf", bbox_inches="tight")
+    fig.savefig(f"{OUT}/StimulusPlot_mrs.png", dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {OUT}/HRMPlot_mrs.*, UVWPlot_mrs.*, StimulusPlot_mrs.*")
+
+    print(f"\nAll figures saved to {OUT}/.")
